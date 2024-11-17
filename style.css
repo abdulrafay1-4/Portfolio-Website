@@ -19,46 +19,53 @@ body {
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
   max-width: 600px;
   width: 90%;
-  border: 3px solid #2b6cb0;
 }
 
-/* Social Links Section */
+/* Countdown Timer */
+#countdown {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+  color: #2b6cb0;
+  font-weight: bold;
+}
+
+/* Link Cards Section */
 .social-links {
   display: flex;
   gap: 20px;
-  justify-content: center; /* Centers the cards horizontally */
-  flex-wrap: wrap; /* Ensures cards wrap on smaller screens */
+  justify-content: center;
   margin-top: 20px;
 }
 
-/* Card Styling */
-.card {
+.link-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 150px;
+  padding: 20px;
   background: #ffffff;
   border: 2px solid #2b6cb0;
   border-radius: 10px;
-  width: 200px; /* Fixed width for consistent card sizes */
-  padding: 20px;
   box-shadow: 0 4px 12px rgba(43, 108, 176, 0.2);
   transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.card:hover {
-  transform: translateY(-5px); /* Slight "lift" on hover */
-  box-shadow: 0 8px 20px rgba(43, 108, 176, 0.4); /* Enhanced shadow on hover */
+.link-card:hover {
+  transform: translateY(-5px); /* Lift effect */
+  box-shadow: 0 8px 20px rgba(43, 108, 176, 0.4);
 }
 
-.card a {
+.link-card i {
+  font-size: 2rem;
+  color: #2b6cb0;
+  margin-bottom: 10px;
+}
+
+.link-card a {
   text-decoration: none;
   color: #2b6cb0;
-}
-
-.card h2 {
-  font-size: 1.2rem;
-  margin-bottom: 10px;
-  color: #2d3748;
-}
-
-.card p {
-  font-size: 0.9rem;
-  color: #4a5568;
+  font-weight: bold;
+  font-size: 1rem;
+  text-align: center;
 }
