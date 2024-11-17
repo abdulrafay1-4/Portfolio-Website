@@ -1,3 +1,4 @@
+// Countdown Timer
 const countdownDate = new Date("December 31, 2024 23:59:59").getTime();
 
 const interval = setInterval(() => {
