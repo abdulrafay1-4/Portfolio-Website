@@ -10,7 +10,7 @@ body {
   height: 100vh;
 }
 
-/* Container Styling */
+/* Main Container */
 .container {
   text-align: center;
   padding: 40px;
@@ -22,46 +22,43 @@ body {
   border: 3px solid #2b6cb0;
 }
 
-h1 {
-  font-size: 3rem;
-  color: #2b6cb0;
-  margin-bottom: 1rem;
-}
-
-p {
-  font-size: 1.2rem;
-  margin-bottom: 1.5rem;
-  color: #4a5568;
-}
-
-/* Countdown Timer */
-#countdown {
-  font-size: 1.5rem;
-  margin-bottom: 2rem;
-  color: #2b6cb0;
-  font-weight: bold;
-}
-
-/* Button Styling */
+/* Social Links Section */
 .social-links {
   display: flex;
-  gap: 15px;
-  flex-direction: column;
-  align-items: center;
+  gap: 20px;
+  justify-content: center; /* Centers the cards horizontally */
+  flex-wrap: wrap; /* Ensures cards wrap on smaller screens */
+  margin-top: 20px;
 }
 
-.button {
-  padding: 15px 25px;
-  font-weight: bold;
-  color: #ffffff;
-  text-decoration: none;
-  background-color: #2b6cb0;
+/* Card Styling */
+.card {
+  background: #ffffff;
+  border: 2px solid #2b6cb0;
   border-radius: 10px;
+  width: 200px; /* Fixed width for consistent card sizes */
+  padding: 20px;
   box-shadow: 0 4px 12px rgba(43, 108, 176, 0.2);
   transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 20px rgba(43, 108, 176, 0.4);
+.card:hover {
+  transform: translateY(-5px); /* Slight "lift" on hover */
+  box-shadow: 0 8px 20px rgba(43, 108, 176, 0.4); /* Enhanced shadow on hover */
+}
+
+.card a {
+  text-decoration: none;
+  color: #2b6cb0;
+}
+
+.card h2 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  color: #2d3748;
+}
+
+.card p {
+  font-size: 0.9rem;
+  color: #4a5568;
 }
