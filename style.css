@@ -1,71 +1,67 @@
-/* Global Styling */
+/* General Styles */
 body {
+  background-color: black;
+  color: limegreen;
+  font-family: 'Courier New', monospace;
   margin: 0;
-  font-family: 'Poppins', sans-serif;
-  background: linear-gradient(to right, #fdfbfb, #ebedee);
-  color: #333;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  padding: 20px;
+  overflow: hidden;
+}
+
+#terminal {
   height: 100vh;
-}
-
-/* Main Container */
-.container {
-  text-align: center;
-  padding: 40px;
-  background: #ffffff;
-  border-radius: 20px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-  max-width: 600px;
-  width: 90%;
-}
-
-/* Countdown Timer */
-#countdown {
-  font-size: 1.5rem;
-  margin-bottom: 2rem;
-  color: #2b6cb0;
-  font-weight: bold;
-}
-
-/* Link Cards Section */
-.social-links {
-  display: flex;
-  gap: 20px;
-  justify-content: center;
-  margin-top: 20px;
-}
-
-.link-card {
   display: flex;
   flex-direction: column;
+}
+
+#output {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding-bottom: 10px;
+}
+
+#output div {
+  white-space: pre-wrap;
+  line-height: 1.5;
+}
+
+#input-line {
+  display: flex;
   align-items: center;
-  justify-content: center;
-  width: 150px;
-  padding: 20px;
-  background: #ffffff;
-  border: 2px solid #2b6cb0;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(43, 108, 176, 0.2);
-  transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.link-card:hover {
-  transform: translateY(-5px); /* Lift effect */
-  box-shadow: 0 8px 20px rgba(43, 108, 176, 0.4);
+#prompt {
+  margin-right: 10px;
 }
 
-.link-card i {
-  font-size: 2rem;
-  color: #2b6cb0;
-  margin-bottom: 10px;
+#input {
+  background: none;
+  border: none;
+  color: limegreen;
+  outline: none;
+  flex-grow: 1;
+  font-family: 'Courier New', monospace;
+  font-size: 16px;
 }
 
-.link-card a {
-  text-decoration: none;
-  color: #2b6cb0;
+.command {
+  color: cyan;
   font-weight: bold;
-  font-size: 1rem;
-  text-align: center;
+}
+
+/* Scrollbar Styles */
+#output::-webkit-scrollbar {
+  width: 10px;
+}
+
+#output::-webkit-scrollbar-track {
+  background: #222;
+}
+
+#output::-webkit-scrollbar-thumb {
+  background: limegreen;
+}
+
+#output::-webkit-scrollbar-thumb:hover {
+  background: cyan;
 }
