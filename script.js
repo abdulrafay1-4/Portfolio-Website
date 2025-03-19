@@ -64,4 +64,32 @@ function handleCommand(command) {
       break;
     case 'ctf':
       outputLine.innerHTML += `
-        <br>CTF Write
+        <br>CTF Writeups:
+        <br>1. <span class="command">Writeup 1</span> - Solution for a reverse engineering challenge.
+        <br>2. <span class="command">Writeup 2</span> - Solution for a web exploitation challenge.
+      `;
+      break;
+    case 'blog':
+      outputLine.innerHTML += `
+        <br>Blog Posts:
+        <br>1. <span class="command">Post 1</span> - How to get started with CTFs.
+        <br>2. <span class="command">Post 2</span> - Top 10 cybersecurity tools for beginners.
+      `;
+      break;
+    case 'contact':
+      outputLine.innerHTML += `
+        <br>Contact Me:
+        <br>Email: <span class="command">your.email@example.com</span>
+        <br>GitHub: <span class="command">github.com/yourusername</span>
+      `;
+      break;
+    case 'clear':
+      output.innerHTML = '';
+      break;
+    default:
+      outputLine.innerHTML += `<br>Command not found. Type <span class="command">help</span> for available commands.`;
+  }
+
+  // Scroll to the bottom of the output
+  output.scrollTop = output.scrollHeight;
+}
