@@ -34,7 +34,7 @@ input.addEventListener('keydown', (e) => {
 
 function handleCommand(command) {
   const outputLine = document.createElement('div');
-  outputLine.innerHTML = `<span class="prompt">user@portfolio:~$</span> ${command}`;
+  outputLine.innerHTML = `<span class="prompt">outcast@portfolio:~$</span> ${command}`;
   output.appendChild(outputLine);
 
   switch (command.toLowerCase()) {
@@ -79,8 +79,8 @@ function handleCommand(command) {
     case 'contact':
       outputLine.innerHTML += `
         <br>Contact Me:
-        <br>Email: <span class="command">your.email@example.com</span>
-        <br>GitHub: <span class="command">github.com/yourusername</span>
+        <br>Email: <span class="command">abdulrafaybinrauf@gmail.com</span>
+        <br>GitHub: <span class="command">github.com/abdulrafay1-4</span>
       `;
       break;
     case 'clear':
