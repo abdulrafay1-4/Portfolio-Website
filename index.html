@@ -205,17 +205,108 @@
   </div>
 
   <script>
-    /* Sidebar Navigation */
-    function openNav() {
-      document.getElementById("mySidenav").style.width = "250px";
-      document.getElementById("main").style.marginLeft = "250px";
-    }
-
-    function closeNav() {
-      document.getElementById("mySidenav").style.width = "0";
-      document.getElementById("main").style.marginLeft= "0";
-    }
-
-    /* Terminal Functionality */
     const terminalOutput = document.getElementById('output');
-    const inputField = document.get 
+    const inputField = document.getElementById('input');
+    const commandHistory = [];
+    let historyIndex = -1;
+
+    const commands = {
+      help: `Available commands:
+  about, projects, contact, skills, experience, education, clear, help, sudo`,
+
+      about: `I'm a cyber-security student passionate about ethical hacking, terminal interfaces, and building secure apps.`,
+
+      projects: `1. Terminal Portfolio
+2. Pen Testing Toolkit
+3. Capture The Flag Challenge Platform`,
+
+      contact: `Email: yourname@protonmail.com
+GitHub: https://github.com/yourhandle
+LinkedIn: https://linkedin.com/in/yourhandle`,
+
+      skills: `• Network Security
+• Penetration Testing
+• Web Development (HTML, CSS, JS)
+• Cryptography
+• Linux & Scripting`,
+
+      experience: `CyberSec Intern @ CyberSecure Inc. (2024)
+• Conducted vulnerability assessments
+• Developed internal security dashboards
+• Automated log analysis`,
+
+      education: `Bachelor of Science in Cyber Security
+XYZ University (2021 - 2025)`,
+
+      sudo: `Permission denied: You are not root 🛑`,
+
+      clear: () => {
+        terminalOutput.innerHTML = '';
+      }
+    };
+
+    function typeOutput(text, delay = 10) {
+      return new Promise(resolve => {
+        let i = 0;
+        const line = document.createElement('div');
+        terminalOutput.appendChild(line);
+
+        function type() {
+          if (i < text.length) {
+            line.textContent += text.charAt(i);
+            i++;
+            setTimeout(type, delay);
+          } else {
+            resolve();
+          }
+        }
+        type();
+      });
+    }
+
+    inputField.addEventListener('keydown', async function (e) {
+      if (e.key === 'Enter') {
+        const command = inputField.value.trim();
+        commandHistory.push(command);
+        historyIndex = commandHistory.length;
+
+        const echo = document.createElement('div');
+        echo.textContent = `user@portfolio:~$ ${command}`;
+        terminalOutput.appendChild(echo);
+
+        if (commands[command]) {
+          const result = commands[command];
+          if (typeof result === 'function') {
+            result();
+          } else {
+            await typeOutput(result);
+          }
+        } else {
+          await typeOutput(`Command not found: ${command}`);
+        }
+
+        inputField.value = '';
+        terminalOutput.scrollTop = terminalOutput.scrollHeight;
+      }
+
+      // Command history
+      if (e.key === 'ArrowUp') {
+        if (historyIndex > 0) {
+          historyIndex--;
+          inputField.value = commandHistory[historyIndex];
+        }
+      }
+
+      if (e.key === 'ArrowDown') {
+        if (historyIndex < commandHistory.length - 1) {
+          historyIndex++;
+          inputField.value = commandHistory[historyIndex];
+        } else {
+          inputField.value = '';
+          historyIndex = commandHistory.length;
+        }
+      }
+    });
+  </script>
+</body>
+</html>
