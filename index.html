@@ -303,11 +303,15 @@
   <span>user@portfolio ~ uptime: 3 days</span>
   <span style="float:right;">IP: 127.0.0.1</span>
 </footer>
-  
+
 <script>
   // Matrix Background
   const canvas = document.getElementById('matrix');
   const ctx = canvas.getContext('2d');
+  canvas.style.zIndex = "-1";
+  canvas.style.position = "fixed";
+  canvas.style.top = "0";
+  canvas.style.left = "0";
 
   canvas.height = window.innerHeight;
   canvas.width = window.innerWidth;
@@ -340,12 +344,115 @@
     canvas.height = window.innerHeight;
   });
 
+  // Sidebar
+  function openNav() {
+    document.getElementById("mySidenav").style.width = "250px";
+    document.getElementById("main").style.marginLeft = "250px";
+  }
+
+  function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+    document.getElementById("main").style.marginLeft= "0";
+  }
+
+  // Terminal Core
+  const inputField = document.getElementById('input');
+  const terminalOutput = document.getElementById('output');
+  const commandHints = document.getElementById('command-hints');
+  const commandHistory = [];
+  let historyIndex = -1;
+
+  const commands = {
+    help: `Available commands: about, projects, contact, skills, experience, education, clear, sudo`,
+    about: `Cybersecurity student passionate about hacking and terminal UI.`,
+    projects: `Projects:
+1. Terminal Portfolio
+  > Type 'project terminal' for more
+2. Pen Testing Toolkit
+  > Type 'project pentest' for more
+3. Capture The Flag Platform
+  > Type 'project ctf' for more`,
+    contact: `Email: yourname@protonmail.com\nGitHub: github.com/yourhandle\nLinkedIn: linkedin.com/in/yourhandle`,
+    skills: `HTML, CSS, JavaScript, Python, Bash, Nmap, Linux`,
+    experience: `CyberSec Intern @ CyberSecure Inc.`,
+    education: `B.Sc. in Cyber Security, XYZ University`,
+    "project terminal": `Terminal Portfolio:\n- Terminal UI\n- ASCII Art\n- Typing Animation`,
+    "project pentest": `Pentest Toolkit:\n- Bash + Python Tools\n- Recon Scripts`,
+    "project ctf": `CTF Platform:\n- Flask\n- Web Vulns Challenges`,
+    sudo: `Permission denied: You're not root.`,
+    clear: () => {
+      terminalOutput.innerHTML = '';
+    }
+  };
+
+  function typeOutput(text, delay = 10) {
+    return new Promise(resolve => {
+      let i = 0;
+      const line = document.createElement('div');
+      terminalOutput.appendChild(line);
+      function type() {
+        if (i < text.length) {
+          line.textContent += text.charAt(i);
+          i++;
+          setTimeout(type, delay);
+        } else {
+          resolve();
+        }
+      }
+      type();
+    });
+  }
+
+  inputField.addEventListener('keydown', async function (e) {
+    if (e.key === 'Enter') {
+      const command = inputField.value.trim();
+      commandHistory.push(command);
+      historyIndex = commandHistory.length;
+
+      const echo = document.createElement('div');
+      echo.textContent = `user@portfolio:~$ ${command}`;
+      terminalOutput.appendChild(echo);
+
+      if (commands[command]) {
+        const result = commands[command];
+        if (typeof result === 'function') {
+          result();
+        } else {
+          await typeOutput(result);
+        }
+      } else {
+        await typeOutput(`Command not found: ${command}`);
+      }
+
+      inputField.value = '';
+      terminalOutput.scrollTop = terminalOutput.scrollHeight;
+      commandHints.textContent = '';
+    }
+
+    if (e.key === 'ArrowUp') {
+      if (historyIndex > 0) {
+        historyIndex--;
+        inputField.value = commandHistory[historyIndex];
+      }
+    }
+
+    if (e.key === 'ArrowDown') {
+      if (historyIndex < commandHistory.length - 1) {
+        historyIndex++;
+        inputField.value = commandHistory[historyIndex];
+      } else {
+        inputField.value = '';
+        historyIndex = commandHistory.length;
+      }
+    }
+  });
+
   inputField.addEventListener('input', () => {
     const val = inputField.value.trim().toLowerCase();
     const suggestions = Object.keys(commands).filter(cmd => cmd.startsWith(val));
-    document.getElementById('command-hints').textContent = suggestions.join('  ') || '';
+    commandHints.textContent = suggestions.join('   ') || '';
   });
-  
+
   // Dark/Light Theme Toggle
   let dark = true;
   function toggleTheme() {
@@ -361,27 +468,7 @@
     document.getElementById('themeToggle').style.background = dark ? '#333' : '#ddd';
     document.getElementById('themeToggle').style.color = dark ? '#fff' : '#000';
   }
-
-  // Project Expansion
-  commands.projects = `Projects:
-1. Terminal Portfolio
-  > Type 'project terminal' for more
-2. Pen Testing Toolkit
-  > Type 'project pentest' for more
-3. Capture The Flag Platform
-  > Type 'project ctf' for more`;
-
-  commands["project terminal"] = `Terminal Portfolio:
-- A web-based portfolio mimicking terminal interaction
-- Built with vanilla JS, CSS animations, ASCII art, and Easter eggs`;
-
-  commands["project pentest"] = `Pen Testing Toolkit:
-- Collection of recon tools written in Python and Bash
-- Includes subdomain scanner, port mapper, basic exploit repo`;
-
-  commands["project ctf"] = `Capture The Flag Platform:
-- Mini web CTF game built in Flask
-- Login bruteforce, XSS, SQLi, and crypto challenges`;
 </script>
+  
 </body>
 </html>
