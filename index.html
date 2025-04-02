@@ -1,28 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Abdul Rafay - Terminal Portfolio</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Terminal Portfolio</title>
+  <style>
+    body {
+      margin: 0;
+      background: #0f0f0f;
+      color: #33ff33;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 1.1rem;
+      padding: 20px;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    #terminal {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .line {
+      display: block;
+    }
+
+    .prompt::before {
+      content: "user@cyber:~$ ";
+      color: #33ff33;
+    }
+
+    input {
+      background: transparent;
+      border: none;
+      color: #33ff33;
+      outline: none;
+      width: 100%;
+      font-family: inherit;
+      font-size: inherit;
+    }
+
+    .output {
+      white-space: pre-wrap;
+      margin-left: 1.5rem;
+    }
+
+    .blinker {
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+      50% {
+        opacity: 0;
+      }
+    }
+  </style>
 </head>
 <body>
   <div id="terminal">
-    <div id="output">
-      <pre>
-        █████╗ ██████╗ ██████╗ ██╗   ██╗██╗      
-        ██╔══██╗██╔══██╗██╔══██╗██║   ██║██║     
-        ███████║██║  ██║██████╔╝██║   ██║██║      
-        ██╔══██║██║  ██║██╔══██╗██║   ██║██║     
-        ██║  ██║██████╔╝██████╔╝╚██████╔╝███████╗
-        ╚═╝  ╚═╝╚═════╝ ╚═════╝  ╚═════╝ ╚══════╝   
-      </pre>
-    </div>
-    <div id="input-line">
-      <span id="prompt">outcast@portfolio:~$</span>
-      <input type="text" id="input" autofocus>
+    <div class="line prompt">
+      <input type="text" autofocus id="input" autocomplete="off" />
     </div>
   </div>
-  <script src="script.js"></script>
+
+  <script>
+    const terminal = document.getElementById('terminal');
+    const input = document.getElementById('input');
+
+    const commands = {
+      help: 'Available commands: about, projects, contact, clear, help',
+      about: 'Hi! I\'m a cyber security student passionate about ethical hacking and building cool stuff.',
+      projects: '• Portfolio Terminal\n• Pen Testing Toolkit\n• Capture The Flag challenges\n(Write more about each!)',
+      contact: 'Email: yourname@protonmail.com\nGitHub: github.com/yourhandle\nLinkedIn: linkedin.com/in/yourhandle',
+      clear: 'clear'
+    };
+
+    input.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') {
+        const command = input.value.trim();
+        const line = document.createElement('div');
+        line.className = 'line';
+        line.innerHTML = `<span class="prompt">${command}</span>`;
+        terminal.insertBefore(line, input.parentElement);
+
+        if (command in commands) {
+          if (command === 'clear') {
+            terminal.innerHTML = '';
+          } else {
+            const output = document.createElement('div');
+            output.className = 'line output';
+            output.textContent = commands[command];
+            terminal.insertBefore(output, input.parentElement);
+          }
+        } else {
+          const error = document.createElement('div');
+          error.className = 'line output';
+          error.textContent = `'${command}': command not found`;
+          terminal.insertBefore(error, input.parentElement);
+        }
+
+        input.value = '';
+        terminal.scrollTop = terminal.scrollHeight;
+      }
+    });
+  </script>
 </body>
 </html>
