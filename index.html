@@ -22,6 +22,8 @@
       --terminal-border-color: rgba(0, 255, 0, 0.5);
       --sidebar-bg: #1e1e1e;
       --footer-bg: #1e1e1e;
+      --modal-bg: rgba(0, 0, 0, 0.8);
+      --modal-content-bg: #222;
     }
     /* Light Theme Variables */
     .light-mode {
@@ -34,8 +36,10 @@
       --terminal-border-color: rgba(0, 0, 0, 0.3);
       --sidebar-bg: #e0e0e0;
       --footer-bg: #e0e0e0;
+      --modal-bg: rgba(255, 255, 255, 0.8);
+      --modal-content-bg: #fff;
     }
-    /* General Reset */
+    /* Global Reset */
     * {
       margin: 0;
       padding: 0;
@@ -47,6 +51,7 @@
       color: var(--text-color);
       line-height: 1.6;
       transition: background-color 0.3s, color 0.3s;
+      overflow-x: hidden;
     }
     a {
       color: var(--link-color);
@@ -61,15 +66,17 @@
       padding: 20px;
       text-align: center;
       position: relative;
+      overflow: hidden;
     }
     header h1 {
-      margin: 0;
-      font-size: 2.5rem;
+      font-size: 2.8rem;
+      margin-bottom: 10px;
+      animation: slideDown 0.8s ease-out;
     }
     header p {
-      margin: 5px 0 0;
       font-size: 1.2rem;
       color: #bbb;
+      animation: fadeIn 1.2s ease-out;
     }
     #theme-toggle {
       position: absolute;
@@ -78,28 +85,35 @@
       background: transparent;
       border: none;
       color: var(--link-color);
-      font-size: 1.2rem;
+      font-size: 1.4rem;
       cursor: pointer;
+      outline: none;
+      transition: color 0.3s;
     }
-    /* Navigation Bar */
+    #theme-toggle:hover {
+      color: var(--text-color);
+    }
+    /* Navigation */
     nav {
       background: var(--nav-bg);
-      padding: 10px 0;
+      padding: 12px 0;
       text-align: center;
+      animation: fadeIn 1s ease-out;
     }
     nav a {
       color: #fff;
-      margin: 0 15px;
+      margin: 0 20px;
       font-size: 1.1rem;
-      transition: color 0.3s;
+      transition: color 0.3s, transform 0.3s;
     }
     nav a:hover {
       color: var(--link-color);
+      transform: scale(1.1);
     }
     nav a i {
-      margin-right: 5px;
+      margin-right: 8px;
     }
-    /* Main Content */
+    /* Main Layout */
     main {
       display: flex;
       justify-content: space-between;
@@ -118,10 +132,13 @@
       margin-right: 20px;
       background-image: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.95));
       transition: background-color 0.3s;
+      position: relative;
     }
     .output {
       white-space: pre-wrap;
       margin-bottom: 10px;
+      opacity: 0;
+      animation: fadeInText 0.5s forwards;
     }
     .prompt {
       display: flex;
@@ -138,7 +155,7 @@
     @keyframes blink {
       50% { opacity: 0; }
     }
-    /* Sidebar */
+    /* Sidebar / Additional Sections */
     aside {
       background: var(--sidebar-bg);
       padding: 20px;
@@ -146,20 +163,70 @@
       box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
       width: 300px;
       transition: background-color 0.3s;
+      animation: slideIn 1s ease-out;
+      margin-bottom: 20px;
     }
     aside h2 {
-      margin-top: 0;
+      margin-bottom: 10px;
+    }
+    aside p {
+      margin-bottom: 10px;
+    }
+    aside h3 {
+      margin-top: 20px;
+      margin-bottom: 10px;
+    }
+    aside ul {
+      list-style: disc;
+      padding-left: 20px;
     }
     /* Footer */
     footer {
       background: var(--footer-bg);
       text-align: center;
-      padding: 10px 0;
+      padding: 12px 0;
       margin-top: 20px;
+      animation: fadeIn 1s ease-out;
     }
     footer p {
-      margin: 0;
       color: #bbb;
+    }
+    /* Modal for Resume */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: var(--modal-bg);
+      animation: fadeInModal 0.5s;
+    }
+    .modal-content {
+      background-color: var(--modal-content-bg);
+      margin: 10% auto;
+      padding: 20px;
+      border: 1px solid var(--link-color);
+      width: 80%;
+      max-width: 600px;
+      border-radius: 8px;
+      position: relative;
+      animation: slideDownModal 0.5s;
+    }
+    .modal-content h2 {
+      margin-bottom: 10px;
+    }
+    .close-modal {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: transparent;
+      border: none;
+      font-size: 1.4rem;
+      cursor: pointer;
+      color: var(--link-color);
     }
     /* Responsive Design */
     @media (max-width: 768px) {
@@ -169,10 +236,36 @@
       #terminal {
         margin-right: 0;
         margin-bottom: 20px;
+        height: 60vh;
       }
       aside {
         width: 100%;
       }
+    }
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes slideDown {
+      from { transform: translateY(-20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes slideIn {
+      from { transform: translateX(20px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    @keyframes fadeInText {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes fadeInModal {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes slideDownModal {
+      from { transform: translateY(-30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
     }
   </style>
 </head>
@@ -200,7 +293,7 @@
         <span class="blinker">|</span>
       </div>
     </section>
-    <!-- Sidebar -->
+    <!-- Sidebar / About Section -->
     <aside role="complementary" id="about">
       <h2>About Me</h2>
       <p>I'm a Cyber Security student at FAST-NUCES with a passion for web development and open-source contribution.</p>
@@ -208,11 +301,35 @@
       <p>Email: <a href="mailto:abdulrafaybinrauf@gmail.com">abdulrafaybinrauf@gmail.com</a></p>
       <p>GitHub: <a href="https://github.com/abdulrafay1-4" target="_blank">abdulrafay1-4</a></p>
     </aside>
+    <!-- Projects Section -->
+    <aside role="complementary" id="projects">
+      <h2>Projects</h2>
+      <ul>
+        <li><strong>Portfolio Website:</strong> Terminal-themed portfolio.</li>
+        <li><strong>Cyber Security Toolkit:</strong> Tools for security analysis.</li>
+        <li><strong>Open-Source Contributions:</strong> Contributions to various projects.</li>
+      </ul>
+    </aside>
+    <!-- Contact Section -->
+    <aside role="complementary" id="contact">
+      <h2>Contact</h2>
+      <p>You can reach me at: <a href="mailto:abdulrafaybinrauf@gmail.com">abdulrafaybinrauf@gmail.com</a></p>
+      <p>LinkedIn: <a href="https://linkedin.com/in/abdulrafay" target="_blank">linkedin.com/in/abdulrafay</a></p>
+    </aside>
   </main>
   <!-- Footer -->
   <footer role="contentinfo">
     <p>&copy; 2025 Abdul Rafay. All rights reserved.</p>
   </footer>
+  <!-- Modal for Resume -->
+  <div id="resume-modal" class="modal" aria-hidden="true">
+    <div class="modal-content">
+      <button class="close-modal" aria-label="Close Resume Modal"><i class="fa-solid fa-xmark"></i></button>
+      <h2>My Resume</h2>
+      <p>You can download my resume by clicking the link below:</p>
+      <p><a href="https://example.com/resume.pdf" target="_blank">Download Resume</a></p>
+    </div>
+  </div>
   <script>
     // Theme Toggle Functionality
     const themeToggle = document.getElementById('theme-toggle');
@@ -227,26 +344,29 @@
         icon.classList.add('fa-moon');
       }
     });
-
-    // Terminal Functionality with Command History and Autocompletion
+    
+    // Terminal Functionality
     const terminalOutput = document.getElementById('output');
     const inputField = document.getElementById('input');
-
+    const resumeModal = document.getElementById('resume-modal');
+    const closeModalButton = document.querySelector('.close-modal');
+    
+    // Command definitions
     const commandList = {
-      help: 'Available commands: about, projects, contact, resume, skills, social, clear, cat flag.txt',
+      help: 'Available commands: help, about, projects, contact, resume, skills, social, clear, cat flag.txt',
       about: 'I am a Cyber Security student at FAST-NUCES with a passion for web development and open-source contribution.',
-      projects: '1. Portfolio Website\n2. Cyber Security Toolkit\n3. Open-Source Contributions',
-      contact: 'Email: abdulrafaybinrauf@gmail.com\nGitHub: github.com/abdulrafay1-4',
-      resume: 'Download my resume at: https://example.com/resume.pdf',
-      skills: 'Skills: Cyber Security, Web Development, Reverse Engineering, Open-Source',
-      social: 'GitHub: github.com/abdulrafay1-4 | LinkedIn: linkedin.com/in/abdulrafay',
-      'cat flag.txt': 'Congratulations! You found the hidden flag: FLAG{you_found_it}'
+      projects: 'Projects:\n1. Portfolio Website\n2. Cyber Security Toolkit\n3. Open-Source Contributions',
+      contact: 'Contact:\nEmail: abdulrafaybinrauf@gmail.com\nLinkedIn: linkedin.com/in/abdulrafay',
+      skills: 'Skills:\n- Cyber Security\n- Web Development\n- Reverse Engineering\n- Open-Source',
+      social: 'Social:\nGitHub: github.com/abdulrafay1-4\nLinkedIn: linkedin.com/in/abdulrafay',
+      'cat flag.txt': 'Congratulations! You found the hidden flag: FLAG{you_found_it}',
+      clear: ''
     };
-
+    
     let commandHistory = [];
     let historyIndex = -1;
-
-    // Typing animation for the welcome message
+    
+    // Typing animation for welcome message
     const welcomeMessage = "Welcome to my portfolio! Type 'help' to see available commands.";
     let welcomeIndex = 0;
     function typeWelcome() {
@@ -259,7 +379,16 @@
       }
     }
     window.addEventListener('load', typeWelcome);
-
+    
+    // Utility function to add terminal output with animation
+    function addTerminalOutput(text) {
+      const outputDiv = document.createElement('div');
+      outputDiv.className = 'output';
+      outputDiv.textContent = text;
+      terminalOutput.appendChild(outputDiv);
+      terminalOutput.scrollTop = terminalOutput.scrollHeight;
+    }
+    
     inputField.addEventListener('keydown', function(event) {
       // Autocompletion on Tab key
       if (event.key === 'Tab') {
@@ -270,7 +399,7 @@
           inputField.value = possibleCommands[0];
         }
       }
-      // Navigate through command history
+      // Command history navigation
       else if (event.key === 'ArrowUp') {
         if (commandHistory.length && historyIndex > 0) {
           historyIndex--;
@@ -289,36 +418,56 @@
           inputField.value = '';
         }
         event.preventDefault();
-      } else if (event.key === 'Enter') {
+      }
+      // Process command on Enter
+      else if (event.key === 'Enter') {
         const input = inputField.value.trim().toLowerCase();
         if (input !== '') {
           commandHistory.push(input);
           historyIndex = commandHistory.length;
         }
-        inputField.value = '';
-
         // Display the command typed
-        const commandText = document.createElement('div');
-        commandText.className = 'output';
-        commandText.textContent = `guest@abdulrafay:~$ ${input}`;
-        terminalOutput.appendChild(commandText);
-
-        // Process the command
+        const commandDisplay = document.createElement('div');
+        commandDisplay.className = 'output';
+        commandDisplay.textContent = `guest@abdulrafay:~$ ${input}`;
+        terminalOutput.appendChild(commandDisplay);
+        inputField.value = '';
+    
+        // Process command logic
         if (input === 'clear') {
           terminalOutput.innerHTML = '';
-        } else if (commandList[input]) {
-          const outputText = document.createElement('div');
-          outputText.className = 'output';
-          outputText.textContent = commandList[input];
-          terminalOutput.appendChild(outputText);
+        } else if (commandList.hasOwnProperty(input)) {
+          if (input === 'resume') {
+            // Open resume modal
+            resumeModal.style.display = 'block';
+          } else {
+            addTerminalOutput(commandList[input]);
+          }
         } else {
-          const outputText = document.createElement('div');
-          outputText.className = 'output';
-          outputText.textContent = `'${input}': command not found. Type 'help' for a list of commands.`;
-          terminalOutput.appendChild(outputText);
+          addTerminalOutput(`'${input}': command not found. Type 'help' for a list of commands.`);
         }
         terminalOutput.scrollTop = terminalOutput.scrollHeight;
       }
+    });
+    
+    // Modal close functionality
+    closeModalButton.addEventListener('click', () => {
+      resumeModal.style.display = 'none';
+    });
+    window.addEventListener('click', (event) => {
+      if (event.target === resumeModal) {
+        resumeModal.style.display = 'none';
+      }
+    });
+    
+    // Smooth scroll for navigation links
+    document.querySelectorAll('nav a').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
     });
   </script>
 </body>
