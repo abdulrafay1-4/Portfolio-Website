@@ -4,67 +4,101 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Abdul Rafay's Portfolio</title>
+  <meta name="description" content="Abdul Rafay's portfolio: Cyber Security Enthusiast and Web Developer showcasing projects, skills, and contact information in a terminal-themed design.">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
   <style>
+    /* CSS Variables for Colors */
+    :root {
+      --bg-color: #121212;
+      --text-color: #ffffff;
+      --link-color: #1e90ff;
+      --header-bg: #1e1e1e;
+      --nav-bg: #333;
+      --terminal-bg: #000;
+      --terminal-border-color: rgba(0, 255, 0, 0.5);
+      --sidebar-bg: #1e1e1e;
+      --footer-bg: #1e1e1e;
+    }
+    /* Light Theme Variables */
+    .light-mode {
+      --bg-color: #f5f5f5;
+      --text-color: #333333;
+      --link-color: #007acc;
+      --header-bg: #e0e0e0;
+      --nav-bg: #ccc;
+      --terminal-bg: #fff;
+      --terminal-border-color: rgba(0, 0, 0, 0.3);
+      --sidebar-bg: #e0e0e0;
+      --footer-bg: #e0e0e0;
+    }
     /* General Reset */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
-
     body {
-      font-family: 'Courier New', Courier, monospace;
-      background-color: #121212;
-      color: #ffffff;
+      font-family: 'Fira Code', monospace;
+      background-color: var(--bg-color);
+      color: var(--text-color);
       line-height: 1.6;
+      transition: background-color 0.3s, color 0.3s;
     }
-
     a {
-      color: #1e90ff;
+      color: var(--link-color);
       text-decoration: none;
     }
-
     a:hover {
       text-decoration: underline;
     }
-
     /* Header */
     header {
-      background: #1e1e1e;
-      padding: 20px 0;
+      background: var(--header-bg);
+      padding: 20px;
       text-align: center;
+      position: relative;
     }
-
     header h1 {
       margin: 0;
       font-size: 2.5rem;
     }
-
     header p {
       margin: 5px 0 0;
       font-size: 1.2rem;
       color: #bbb;
     }
-
+    #theme-toggle {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: transparent;
+      border: none;
+      color: var(--link-color);
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
     /* Navigation Bar */
     nav {
-      background: #333;
+      background: var(--nav-bg);
       padding: 10px 0;
       text-align: center;
     }
-
     nav a {
       color: #fff;
       margin: 0 15px;
       font-size: 1.1rem;
       transition: color 0.3s;
     }
-
     nav a:hover {
-      color: #1e90ff;
+      color: var(--link-color);
     }
-
+    nav a i {
+      margin-right: 5px;
+    }
     /* Main Content */
     main {
       display: flex;
@@ -72,79 +106,70 @@
       padding: 20px;
       flex-wrap: wrap;
     }
-
     /* Terminal Section */
     #terminal {
-      background-color: #000;
+      background: var(--terminal-bg);
       padding: 20px;
       border-radius: 5px;
-      box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+      box-shadow: 0 0 10px var(--terminal-border-color);
       overflow-y: auto;
       height: 70vh;
       flex: 1;
       margin-right: 20px;
+      background-image: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.95));
+      transition: background-color 0.3s;
     }
-
     .output {
       white-space: pre-wrap;
       margin-bottom: 10px;
     }
-
     .prompt {
       display: flex;
+      align-items: center;
     }
-
-    .prompt span {
+    .prompt span.prompt-text {
       margin-right: 5px;
     }
-
+    /* Blinking Cursor */
     .blinker {
+      font-weight: bold;
       animation: blink 1s steps(2, start) infinite;
     }
-
     @keyframes blink {
-      50% {
-        opacity: 0;
-      }
+      50% { opacity: 0; }
     }
-
     /* Sidebar */
     aside {
-      background: #1e1e1e;
+      background: var(--sidebar-bg);
       padding: 20px;
       border-radius: 5px;
       box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
       width: 300px;
+      transition: background-color 0.3s;
     }
-
     aside h2 {
       margin-top: 0;
     }
-
     /* Footer */
     footer {
-      background: #1e1e1e;
+      background: var(--footer-bg);
       text-align: center;
       padding: 10px 0;
       margin-top: 20px;
     }
-
     footer p {
       margin: 0;
       color: #bbb;
     }
-
     /* Responsive Design */
     @media (max-width: 768px) {
       main {
         flex-direction: column;
       }
-
       #terminal {
         margin-right: 0;
         margin-bottom: 20px;
       }
-
       aside {
         width: 100%;
       }
@@ -152,35 +177,31 @@
   </style>
 </head>
 <body>
-
   <!-- Header -->
   <header>
     <h1>Abdul Rafay</h1>
     <p>Cyber Security Enthusiast | Web Developer</p>
+    <button id="theme-toggle" aria-label="Toggle Dark/Light Theme"><i class="fa-solid fa-moon"></i></button>
   </header>
-
   <!-- Navigation Bar -->
-  <nav>
-    <a href="#about">About</a>
-    <a href="#projects">Projects</a>
-    <a href="#contact">Contact</a>
+  <nav role="navigation">
+    <a href="#about"><i class="fa-solid fa-user"></i> About</a>
+    <a href="#projects"><i class="fa-solid fa-code"></i> Projects</a>
+    <a href="#contact"><i class="fa-solid fa-envelope"></i> Contact</a>
   </nav>
-
   <!-- Main Content -->
-  <main>
+  <main role="main">
     <!-- Terminal Section -->
-    <section id="terminal">
-      <div class="output" id="output">
-        Welcome to my portfolio! Type 'help' to see available commands.
-      </div>
+    <section id="terminal" aria-label="Terminal">
+      <div class="output" id="output"></div>
       <div class="prompt">
-        <span>guest@abdulrafay:~$</span>
-        <input type="text" id="input" autofocus autocomplete="off" style="background: transparent; border: none; color: #33ff33; outline: none; width: 100%; font-family: inherit; font-size: inherit;">
+        <span class="prompt-text">guest@abdulrafay:~$</span>
+        <input type="text" id="input" aria-label="Terminal input" autofocus autocomplete="off" style="background: transparent; border: none; color: #33ff33; outline: none; width: 100%; font-family: inherit; font-size: inherit;">
+        <span class="blinker">|</span>
       </div>
     </section>
-
     <!-- Sidebar -->
-    <aside>
+    <aside role="complementary" id="about">
       <h2>About Me</h2>
       <p>I'm a Cyber Security student at FAST-NUCES with a passion for web development and open-source contribution.</p>
       <h3>Contact Information</h3>
@@ -188,53 +209,117 @@
       <p>GitHub: <a href="https://github.com/abdulrafay1-4" target="_blank">abdulrafay1-4</a></p>
     </aside>
   </main>
-
   <!-- Footer -->
-  <footer>
+  <footer role="contentinfo">
     <p>&copy; 2025 Abdul Rafay. All rights reserved.</p>
   </footer>
-
   <script>
-    // Terminal Functionality
+    // Theme Toggle Functionality
+    const themeToggle = document.getElementById('theme-toggle');
+    themeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('light-mode');
+      const icon = themeToggle.querySelector('i');
+      if (document.body.classList.contains('light-mode')) {
+        icon.classList.remove('fa-moon');
+        icon.classList.add('fa-sun');
+      } else {
+        icon.classList.remove('fa-sun');
+        icon.classList.add('fa-moon');
+      }
+    });
+
+    // Terminal Functionality with Command History and Autocompletion
     const terminalOutput = document.getElementById('output');
     const inputField = document.getElementById('input');
 
-    const commands = {
-      help: 'Available commands: about, projects, contact, clear',
+    const commandList = {
+      help: 'Available commands: about, projects, contact, resume, skills, social, clear, cat flag.txt',
       about: 'I am a Cyber Security student at FAST-NUCES with a passion for web development and open-source contribution.',
       projects: '1. Portfolio Website\n2. Cyber Security Toolkit\n3. Open-Source Contributions',
       contact: 'Email: abdulrafaybinrauf@gmail.com\nGitHub: github.com/abdulrafay1-4',
-      clear: ''
+      resume: 'Download my resume at: https://example.com/resume.pdf',
+      skills: 'Skills: Cyber Security, Web Development, Reverse Engineering, Open-Source',
+      social: 'GitHub: github.com/abdulrafay1-4 | LinkedIn: linkedin.com/in/abdulrafay',
+      'cat flag.txt': 'Congratulations! You found the hidden flag: FLAG{you_found_it}'
     };
 
-    inputField.addEventListener('keypress', function(event) {
-      if (event.key === 'Enter') {
-        const input = inputField.value.trim().toLowerCase();
-        inputField.value = '';
-                if (input === 'clear') {
-          terminalOutput.innerHTML = '';
-        } else {
-          const commandText = document.createElement('div');
-          commandText.className = 'output';
-          commandText.textContent = `guest@abdulrafay:~$ ${input}`;
-          terminalOutput.appendChild(commandText);
+    let commandHistory = [];
+    let historyIndex = -1;
 
+    // Typing animation for the welcome message
+    const welcomeMessage = "Welcome to my portfolio! Type 'help' to see available commands.";
+    let welcomeIndex = 0;
+    function typeWelcome() {
+      if (welcomeIndex < welcomeMessage.length) {
+        terminalOutput.innerHTML += welcomeMessage.charAt(welcomeIndex);
+        welcomeIndex++;
+        setTimeout(typeWelcome, 50);
+      } else {
+        terminalOutput.innerHTML += "\n";
+      }
+    }
+    window.addEventListener('load', typeWelcome);
+
+    inputField.addEventListener('keydown', function(event) {
+      // Autocompletion on Tab key
+      if (event.key === 'Tab') {
+        event.preventDefault();
+        const currentInput = inputField.value.trim().toLowerCase();
+        const possibleCommands = Object.keys(commandList).filter(cmd => cmd.startsWith(currentInput));
+        if (possibleCommands.length === 1) {
+          inputField.value = possibleCommands[0];
+        }
+      }
+      // Navigate through command history
+      else if (event.key === 'ArrowUp') {
+        if (commandHistory.length && historyIndex > 0) {
+          historyIndex--;
+          inputField.value = commandHistory[historyIndex];
+        } else if (commandHistory.length && historyIndex === -1) {
+          historyIndex = commandHistory.length - 1;
+          inputField.value = commandHistory[historyIndex];
+        }
+        event.preventDefault();
+      } else if (event.key === 'ArrowDown') {
+        if (commandHistory.length && historyIndex < commandHistory.length - 1) {
+          historyIndex++;
+          inputField.value = commandHistory[historyIndex];
+        } else {
+          historyIndex = commandHistory.length;
+          inputField.value = '';
+        }
+        event.preventDefault();
+      } else if (event.key === 'Enter') {
+        const input = inputField.value.trim().toLowerCase();
+        if (input !== '') {
+          commandHistory.push(input);
+          historyIndex = commandHistory.length;
+        }
+        inputField.value = '';
+
+        // Display the command typed
+        const commandText = document.createElement('div');
+        commandText.className = 'output';
+        commandText.textContent = `guest@abdulrafay:~$ ${input}`;
+        terminalOutput.appendChild(commandText);
+
+        // Process the command
+        if (input === 'clear') {
+          terminalOutput.innerHTML = '';
+        } else if (commandList[input]) {
           const outputText = document.createElement('div');
           outputText.className = 'output';
-
-          if (commands[input]) {
-            outputText.textContent = commands[input];
-          } else {
-            outputText.textContent = `'${input}': command not found. Type 'help' for a list of commands.`;
-          }
-
+          outputText.textContent = commandList[input];
+          terminalOutput.appendChild(outputText);
+        } else {
+          const outputText = document.createElement('div');
+          outputText.className = 'output';
+          outputText.textContent = `'${input}': command not found. Type 'help' for a list of commands.`;
           terminalOutput.appendChild(outputText);
         }
-
         terminalOutput.scrollTop = terminalOutput.scrollHeight;
       }
     });
   </script>
-
 </body>
 </html>
