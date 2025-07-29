@@ -2,14 +2,14 @@
 
 A modern, responsive portfolio website showcasing my journey in cybersecurity, CTF achievements, and technical projects. Built with Next.js 15, TypeScript, and Tailwind CSS.
 
-[![Deploy to GitHub Pages](https://github.com/yourusername/abdul-rafay-portfolio/actions/workflows/deploy.yml/badge.svg)](https://github.com/yourusername/abdul-rafay-portfolio/actions/workflows/deploy.yml)
+[![Deploy to GitHub Pages](https://github.com/yourusername/abdul-rafay-portfolio/actions/workflows/deploy.yml/badge.svg)](https://github.com/abdulrafay1-4/abdul-rafay-portfolio/actions/workflows/deploy.yml)
 [![Next.js](https://img.shields.io/badge/Next.js-15.4.4-black)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)](https://www.typescriptlang.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.1.11-38B2AC)](https://tailwindcss.com/)
 
 ## 🚀 Live Demo
 
-Visit the live portfolio: [https://yourusername.github.io/abdul-rafay-portfolio/](https://abdulrafay1-4.github.io/Portfolio-Website/)
+Visit the live portfolio: [https://abdulrafay1-4.github.io/abdul-rafay-portfolio/](https://abdulrafay1-4.github.io/Portfolio-Website/)
 
 ## ✨ Features
 
