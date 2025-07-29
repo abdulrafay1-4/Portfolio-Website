@@ -2,8 +2,8 @@
 const nextConfig = {
   output: 'export',
   trailingSlash: true,
-  basePath: process.env.NODE_ENV === 'production' ? '/abdul-rafay-portfolio' : '',
-  assetPrefix: process.env.NODE_ENV === 'production' ? '/abdul-rafay-portfolio/' : '',
+  basePath: process.env.NODE_ENV === 'production' ? '/Portfolio-Website' : '',
+  assetPrefix: process.env.NODE_ENV === 'production' ? '/Portfolio-Website/' : '',
   reactStrictMode: true,
   images: {
     unoptimized: true,
